@@ -1,4 +1,4 @@
-﻿namespace Manager;
+﻿namespace Shared.Contract;
 
 // Query, Find, and Base Handler
 public class FindQueryBaseHandlers<TRepository, TDto, TFindQuery, TFindResult, TQuery, TResult> : QueryBaseHandlers<TRepository, TDto, TQuery, TResult>
