@@ -2,7 +2,12 @@
 
 public class ProgramRepository : BaseRepository<Vsd_Program, Program>, IProgramRepository
 {
-    public ProgramRepository(DatabaseContext databaseContext, IMapper mapper) : base(databaseContext, mapper) { }
+    private readonly DatabaseContext _databaseContext;
+
+    public ProgramRepository(DatabaseContext databaseContext, IMapper mapper) : base(databaseContext, mapper) 
+    {
+        _databaseContext = databaseContext;
+    }
 
     public ProgramResult Query(ProgramQuery programQuery)
     {

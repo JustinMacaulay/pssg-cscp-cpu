@@ -2,7 +2,12 @@
 
 public class PaymentRepository : BaseRepository<Vsd_Payment, Payment>, IPaymentRepository
 {
-    public PaymentRepository(DatabaseContext databaseContext, IMapper mapper) : base(databaseContext, mapper) { }
+    private readonly DatabaseContext _databaseContext;
+
+    public PaymentRepository(DatabaseContext databaseContext, IMapper mapper) : base(databaseContext, mapper) 
+    {
+        _databaseContext = databaseContext;
+    }
 
     public PaymentResult Query(PaymentQuery paymentQuery)
     {

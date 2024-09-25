@@ -1,4 +1,4 @@
-﻿namespace Manager.Contract;
+﻿namespace Shared.Contract;
 
 public interface IDto
 {

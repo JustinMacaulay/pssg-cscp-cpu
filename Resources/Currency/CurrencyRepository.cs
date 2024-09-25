@@ -2,7 +2,12 @@
 
 public class CurrencyRepository : BaseRepository<TransactionCurrency, Currency>, ICurrencyRepository
 {
-    public CurrencyRepository(DatabaseContext databaseContext, IMapper mapper) : base(databaseContext, mapper) { }
+    private readonly DatabaseContext _databaseContext;
+
+    public CurrencyRepository(DatabaseContext databaseContext, IMapper mapper) : base(databaseContext, mapper) 
+    {
+        _databaseContext = databaseContext;
+    }
 
     public FindCurrencyResult FirstOrDefault(FindCurrencyQuery currencyQuery)
     {

@@ -2,7 +2,12 @@
 
 public class ContractRepository : BaseRepository<Vsd_Contract, Contract>, IContractRepository
 {
-    public ContractRepository(DatabaseContext databaseContext, IMapper mapper) : base(databaseContext, mapper) { }
+    private readonly DatabaseContext _databaseContext;
+
+    public ContractRepository(DatabaseContext databaseContext, IMapper mapper) : base(databaseContext, mapper) 
+    {
+        _databaseContext = databaseContext;
+    }
 
     public FindContractResult FirstOrDefault(FindContractQuery contractQuery)
     {

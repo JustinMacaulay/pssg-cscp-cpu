@@ -2,12 +2,6 @@
 
 // NOTE these values need to match the Dynamics values and also need to be updated concurrently with Dynamics
 // these are brittle and a better solution should be considered
-public enum StateCode
-{
-    Active = 0,
-    Inactive = 1
-}
-
 public enum StatusCode
 {
     Active = 0,

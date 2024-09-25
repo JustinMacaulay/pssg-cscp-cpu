@@ -2,7 +2,12 @@
 
 public class ScheduleGRepository : BaseRepository<Vsd_ScheduleG, ScheduleG>, IScheduleGRepository
 {
-    public ScheduleGRepository(DatabaseContext databaseContext, IMapper mapper) : base(databaseContext, mapper) { }
+    private readonly DatabaseContext _databaseContext;
+
+    public ScheduleGRepository(DatabaseContext databaseContext, IMapper mapper) : base(databaseContext, mapper) 
+    {
+        _databaseContext = databaseContext;
+    }
 
     public ScheduleGResult Query(ScheduleGQuery query)
     {

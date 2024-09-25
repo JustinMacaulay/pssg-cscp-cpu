@@ -2,7 +2,12 @@
 
 public class InvoiceRepository : BaseRepository<Vsd_Invoice, Invoice>, IInvoiceRepository
 {
-    public InvoiceRepository(DatabaseContext databaseContext, IMapper mapper) : base(databaseContext, mapper) { }
+    private readonly DatabaseContext _databaseContext;
+
+    public InvoiceRepository(DatabaseContext databaseContext, IMapper mapper) : base(databaseContext, mapper) 
+    {
+        _databaseContext = databaseContext;
+    }
 
     public InvoiceResult Query(InvoiceQuery invoiceQuery)
     {
