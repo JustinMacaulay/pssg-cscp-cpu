@@ -18,12 +18,10 @@ public class SeedDatabaseTests(SeedDatabase seedDatabase, IProgramRepository pro
     public void Get_Approved_Programs()
     {
         var contractQuery = new ContractQuery();
-        //contractQuery.
         var contracts = contractRepository.Query(contractQuery);
 
         var programQuery = new ProgramQuery();
         programQuery.StateCode = StateCode.Active;
-        //programQuery.StatusCode
         var programs = programRepository.Query(programQuery);
 
         var approvedPrograms = programRepository.GetApproved();

@@ -1,7 +1,7 @@
 ﻿namespace Manager;
 
 // Query, Find, and Base Handler
-public class FindQueryBaseHandlers<TRepository, TDto, TFindQuery, TFindResult, TQuery, TResult> : BaseHandlers<TRepository, TDto>
+public class FindQueryBaseHandlers<TRepository, TDto, TFindQuery, TFindResult, TQuery, TResult> : QueryBaseHandlers<TRepository, TDto, TQuery, TResult>
     where TRepository : IFindRepository<TFindQuery, TFindResult>, IQueryRepository<TQuery, TResult>, IBaseRepository<TDto>
     where TDto : IDto
 {
@@ -15,12 +15,6 @@ public class FindQueryBaseHandlers<TRepository, TDto, TFindQuery, TFindResult, T
     public async Task<TFindResult> Handle(TFindQuery query, CancellationToken cancellationToken)
     {
         var results = _repository.FirstOrDefault(query);
-        return await Task.FromResult(results);
-    }
-
-    public async Task<TResult> Handle(TQuery query, CancellationToken cancellationToken)
-    {
-        var results = _repository.Query(query);
         return await Task.FromResult(results);
     }
 }
@@ -61,19 +55,19 @@ public class BaseHandlers<TRepository, TDto>(TRepository repository)
         return await Task.FromResult(results);
     }
 
-    public async Task<bool> Handle(TryDeleteCommand command, CancellationToken cancellationToken)
+    public async Task<bool> Handle(TryDeleteCommand<TDto> command, CancellationToken cancellationToken)
     {
         var results = repository.TryDelete(command.Id);
         return await Task.FromResult(results);
     }
 
-    public async Task<bool> Handle(TryDeleteCommand<TDto> command, CancellationToken cancellationToken)
+    public async Task<bool> Handle(TryDeleteByDtoCommand<TDto> command, CancellationToken cancellationToken)
     {
         var results = repository.TryDelete(command.Payload);
         return await Task.FromResult(results);
     }
 
-    public async Task<bool> Handle(DeleteCommand command, CancellationToken cancellationToken)
+    public async Task<bool> Handle(DeleteCommand<TDto> command, CancellationToken cancellationToken)
     {
         var results = repository.Delete(command.Id);
         return await Task.FromResult(results);
@@ -82,6 +76,6 @@ public class BaseHandlers<TRepository, TDto>(TRepository repository)
 
 public record InsertCommand<TDto>(TDto dto) : PayloadCommand<TDto, Guid>(dto) { }
 public record UpsertCommand<TDto>(TDto dto) : PayloadCommand<TDto, Guid>(dto) { }
-public record TryDeleteCommand<TDto>(TDto dto) : PayloadCommand<TDto, bool>(dto) { }
-public record TryDeleteCommand(Guid Id) : IdCommand(Id) { }
-public record DeleteCommand(Guid Id) : IdCommand(Id) { }
+public record TryDeleteByDtoCommand<TDto>(TDto dto) : PayloadCommand<TDto, bool>(dto) { }
+public record TryDeleteCommand<TDto>(Guid Id) : IdCommand<bool>(Id) { }
+public record DeleteCommand<TDto>(Guid Id) : IdCommand<bool>(Id) { }

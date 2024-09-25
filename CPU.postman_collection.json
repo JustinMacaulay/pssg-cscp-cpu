@@ -1,0 +1,117 @@
+{
+	"info": {
+		"_postman_id": "a1cf9a99-8a52-4deb-998a-e3b4e990bf41",
+		"name": "COAST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "730057"
+	},
+	"item": [
+		{
+			"name": "GET Program/Approved",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{local}}/Program/Approved/2",
+					"host": [
+						"{{local}}"
+					],
+					"path": [
+						"Program",
+						"Approved",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Contract/Clone",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{local}}/Contract/Clone",
+					"host": [
+						"{{local}}"
+					],
+					"path": [
+						"Contract",
+						"Clone"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Schedule/CreateScheduleGTasks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{local}}/Contract/Clone",
+					"host": [
+						"{{local}}"
+					],
+					"path": [
+						"Contract",
+						"Clone"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET User/isLoggedIn",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{dev}}/User/isLoggedIn",
+					"host": [
+						"{{dev}}"
+					],
+					"path": [
+						"User",
+						"isLoggedIn"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "local",
+			"value": "https://localhost:62198/api",
+			"type": "string"
+		},
+		{
+			"key": "dev",
+			"value": "https://coast-cpu-dev.silver.devops.bcgov/api",
+			"type": "string"
+		}
+	]
+}
