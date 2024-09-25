@@ -1,4 +1,4 @@
-﻿namespace Resources;
+﻿namespace Shared.Contract;
 
 public interface IBaseRepository<TDto> where TDto : IDto
 {

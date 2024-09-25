@@ -1,4 +1,4 @@
-﻿namespace Manager.Contract;
+﻿namespace Shared.Contract;
 
 public record PayloadCommand<TPayload, TResponse>(TPayload Payload) : IRequest<TResponse>
 {
