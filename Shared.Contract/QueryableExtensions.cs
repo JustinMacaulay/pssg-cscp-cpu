@@ -1,3 +1,5 @@
+namespace Shared.Contract;
+
 public static class QueryableExtensions
 {
     public static IQueryable<TSource> WhereIf<TSource>(this IQueryable<TSource> source, bool condition, Expression<Func<TSource, bool>> predicate)
