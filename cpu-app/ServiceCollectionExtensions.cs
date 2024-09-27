@@ -2,6 +2,7 @@
 using Manager;
 using Microsoft.Extensions.DependencyInjection;
 using Resources;
+using Shared.Database;
 
 namespace Gov.Cscp.Victims.Public;
 
@@ -38,9 +39,9 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddAutoMapper(this IServiceCollection services)
     {
-        // NOTE global mapper should be first, since it has the prefix configurations
+        // NOTE global and shared mapper should be first, since it has the prefix configurations and shared mappings
         var mapperTypes = new[] {
-            typeof(GlobalMapper), typeof(CurrencyRepositoryMapper), typeof(PaymentRepositoryMapper), typeof(ProgramRepositoryMapper), typeof(ContractRepositoryMapper),
+            typeof(GlobalMapper), typeof(SharedMapper), typeof(CurrencyRepositoryMapper), typeof(PaymentRepositoryMapper), typeof(ProgramRepositoryMapper), typeof(ContractRepositoryMapper),
             typeof(InvoiceRepositoryMapper), typeof(InvoiceLineDetailRepositoryMapper), typeof(ScheduleGRepositoryMapper)
         };
         services.AddAutoMapper(cfg => cfg.ShouldUseConstructor = constructor => constructor.IsPublic, mapperTypes);

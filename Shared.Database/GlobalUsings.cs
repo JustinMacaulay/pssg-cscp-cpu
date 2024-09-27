@@ -1,4 +1,16 @@
 ﻿global using AutoMapper;
+global using Microsoft.Crm.Sdk.Messages;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.PowerPlatform.Dataverse.Client;
 global using Microsoft.Xrm.Sdk;
 global using Microsoft.Xrm.Sdk.Client;
+global using Microsoft.Xrm.Sdk.Messages;
+global using Microsoft.Xrm.Sdk.Metadata;
 global using Shared.Contract;
+global using System.Collections.Concurrent;
+global using System.Diagnostics.CodeAnalysis;
+global using System.ServiceModel;
+global using System.Text;
+global using System.Text.Json;
