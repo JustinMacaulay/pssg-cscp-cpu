@@ -16,7 +16,7 @@ public abstract class BaseRepository<TEntity, TDto>
     public virtual Guid Insert(TDto dto)
     {
         var entity = Map(dto);
-        //_databaseContext.AddObject(entity);
+        _databaseContext.AddObject(entity);
         _databaseContext.SaveChanges();
         return entity.Id;
     }
@@ -31,13 +31,13 @@ public abstract class BaseRepository<TEntity, TDto>
         {
             _databaseContext.Detach(existingEntity);
             _databaseContext.Attach(entity);
-            //_databaseContext.UpdateObject(entity);
+            _databaseContext.UpdateObject(entity);
         }
         else
         {
-            //_databaseContext.AddObject(entity);
+            _databaseContext.AddObject(entity);
         }
-        //_databaseContext.SaveChanges();
+        _databaseContext.SaveChanges();
         return entity.Id;
     }
 
@@ -54,8 +54,8 @@ public abstract class BaseRepository<TEntity, TDto>
         {
             var entity = Map(dto);
             _databaseContext.Attach(entity);
-            //_databaseContext.DeleteObject(entity);
-            //_databaseContext.SaveChanges();
+            _databaseContext.DeleteObject(entity);
+            _databaseContext.SaveChanges();
             return true;
         }
         catch
@@ -74,8 +74,8 @@ public abstract class BaseRepository<TEntity, TDto>
         {
             return false;
         }
-        //_databaseContext.DeleteObject(entity);
-        //_databaseContext.SaveChanges();
+        _databaseContext.DeleteObject(entity);
+        _databaseContext.SaveChanges();
         return true;
     }
 
