@@ -61,6 +61,9 @@ namespace Gov.Cscp.Victims.Public
             services.AddHttpClient<IDocumentMergeService, DocumentMergeService>().AddHttpMessageHandler<KeycloakHandler>();
 
             services.AddMemoryCache();
+
+            services.AddJwtAuth(Configuration["JWT_TOKEN_KEY"]);
+
             // for security reasons, the following headers are set.
             services.AddMvc(opts =>
             {
