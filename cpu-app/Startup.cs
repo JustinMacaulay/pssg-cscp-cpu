@@ -102,7 +102,7 @@ namespace Gov.Cscp.Victims.Public
                     //opts.PayloadSerializerOptions.WriteIndented = true;
                 });
 
-            services.AddJwtBearerAuth(Configuration["JWT_TOKEN_KEY"], Configuration["JWT_VALID_ISSUER"]);
+            services.AddJwtBearerAuth(Configuration["JWT_TOKEN_KEY"], Configuration["JWT_VALID_ISSUER"], !string.IsNullOrEmpty(Configuration["JWT_DISABLE_ISSUER_VALIDATION"]));
             services.AddSiteminderAuth();
 
             services.RegisterPermissionHandler();
@@ -282,18 +282,18 @@ namespace Gov.Cscp.Victims.Public
                     .CreateLogger();
             }
 
-            app.UseSpa(spa =>
-            {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core, see https://go.microsoft.com/fwlink/?linkid=864501
-                spa.Options.SourcePath = "ClientApp";
+            //app.UseSpa(spa =>
+            //{
+            //    // To learn more about options for serving an Angular SPA from ASP.NET Core, see https://go.microsoft.com/fwlink/?linkid=864501
+            //    spa.Options.SourcePath = "ClientApp";
 
-                // Only run the angular CLI Server in Development mode (not staging or test.)
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                    spa.Options.StartupTimeout = TimeSpan.FromSeconds(200);
-                }
-            });
+            //    // Only run the angular CLI Server in Development mode (not staging or test.)
+            //    if (env.IsDevelopment())
+            //    {
+            //        spa.UseAngularCliServer(npmScript: "start");
+            //        spa.Options.StartupTimeout = TimeSpan.FromSeconds(200);
+            //    }
+            //});
         }
     }
 }

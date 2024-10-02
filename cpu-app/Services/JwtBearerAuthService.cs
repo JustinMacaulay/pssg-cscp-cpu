@@ -24,7 +24,7 @@ public class JwtAuthorizeAttribute : AuthorizeAttribute
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddJwtBearerAuth(this IServiceCollection services, string secret, string issuer)
+    public static IServiceCollection AddJwtBearerAuth(this IServiceCollection services, string secret, string issuer, bool disableIssuerValidation = false)
     {
         // JWT token authentication for Dynamics to authenticate
         services.AddAuthentication()
@@ -33,6 +33,7 @@ public static class ServiceCollectionExtensions
                 options.IncludeErrorDetails = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
+                    ValidateIssuer = !disableIssuerValidation,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = issuer,
                     ValidAudience = issuer,
