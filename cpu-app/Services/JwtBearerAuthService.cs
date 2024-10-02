@@ -24,7 +24,7 @@ public class JwtAuthorizeAttribute : AuthorizeAttribute
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddJwtAuth(this IServiceCollection services, string secret, string issuer)
+    public static IServiceCollection AddJwtBearerAuth(this IServiceCollection services, string secret, string issuer)
     {
         // JWT token authentication for Dynamics to authenticate
         services.AddAuthentication()

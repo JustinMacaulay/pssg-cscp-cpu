@@ -7,7 +7,7 @@
     public void ConfigureServices(IServiceCollection services)
     {
         var configuration = new ConfigurationBuilder()
-            .AddUserSecrets< Gov.Cscp.Victims.Public.Startup> ()
+            .AddUserSecrets<Gov.Cscp.Victims.Public.Startup> ()
             .AddEnvironmentVariables()
             .Build();
         services.AddSingleton<IConfiguration>(configuration);

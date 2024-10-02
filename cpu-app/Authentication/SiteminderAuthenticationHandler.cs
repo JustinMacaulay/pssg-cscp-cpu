@@ -1,4 +1,3 @@
-﻿using Gov.Cscp.Victims.Public.Authentication;
 using Gov.Cscp.Victims.Public.Models;
 using Gov.Cscp.Victims.Public.Utils;
 using Gov.Cscp.Victims.Public.Services;
@@ -13,6 +12,7 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Gov.Cscp.Victims.Public.Authentication
 {
@@ -182,6 +182,23 @@ namespace Gov.Cscp.Victims.Public.Authentication
     /// </summary>
     public static class SiteminderAuthenticationExtensions
     {
+        public static IServiceCollection AddSiteminderAuth(this IServiceCollection services)
+        {
+            // siteminder authentication (core 2.0)
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
+                    options.DefaultChallengeScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
+                })
+                .AddSiteminderAuth(options => { });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Business-User", policy => policy.RequireClaim(User.UserTypeClaim, "Business"));
+            });
+            return services;
+        }
+
         /// <summary>
         /// Add Authentication Handler
         /// </summary>
@@ -308,6 +325,7 @@ namespace Gov.Cscp.Victims.Public.Authentication
                 // Authenticate based on SiteMinder Headers
                 // **************************************************
 
+                // TODO userId is always null
                 if (string.IsNullOrEmpty(userId))
                 {
                     _logger.LogDebug("Getting user data from headers");
