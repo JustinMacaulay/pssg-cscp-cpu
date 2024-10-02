@@ -1,8 +1,8 @@
 ﻿using Gov.Cscp.Victims.Public.Background;
+using Gov.Cscp.Victims.Public.Services;
 using Manager;
 using Manager.Contract;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -17,7 +17,7 @@ using Convert = Manager.Contract.Convert;
 namespace Gov.Cscp.Victims.Public.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    [JwtAuthorize]
     public class ScheduleGController(IMediator mediator, IBackgroundTaskQueue taskQueue, IHostApplicationLifetime applicationLifetime, ILoggerFactory loggerFactory) : Controller
     {
         private readonly CancellationToken _cancellationToken = applicationLifetime.ApplicationStopping;

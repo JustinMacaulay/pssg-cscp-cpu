@@ -33,10 +33,7 @@ public static class ServiceCollectionExtensions
                 options.IncludeErrorDetails = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = false,
-                    ValidateLifetime = false,
-                    ValidateIssuerSigningKey = false,
+                    ValidateIssuerSigningKey = true,
                     ValidIssuer = issuer,
                     ValidAudience = issuer,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret))
