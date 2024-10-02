@@ -1,6 +1,5 @@
 ﻿using Manager;
 using Manager.Contract;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,11 +9,12 @@ using System.Threading;
 using Gov.Cscp.Victims.Public.Background;
 using Microsoft.Extensions.Hosting;
 using MediatR;
+using Gov.Cscp.Victims.Public.Services;
 
 namespace Gov.Cscp.Victims.Public.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    [JwtAuthorize]
     public class ProgramController(IBackgroundTaskQueue taskQueue, IHostApplicationLifetime applicationLifetime, IMediator mediator) : Controller
     {
         private readonly CancellationToken _cancellationToken = applicationLifetime.ApplicationStopping;

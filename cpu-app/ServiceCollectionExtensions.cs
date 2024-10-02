@@ -1,6 +1,4 @@
 ﻿using Database;
-using Gov.Cscp.Victims.Public.Authentication;
-using Gov.Cscp.Victims.Public.Models;
 using Manager;
 using Microsoft.Extensions.DependencyInjection;
 using Resources;
@@ -10,23 +8,6 @@ namespace Gov.Cscp.Victims.Public;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddSiteminderAuth(this IServiceCollection services)
-    {
-        // siteminder authentication (core 2.0)
-        services
-            .AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
-                options.DefaultChallengeScheme = SiteMinderAuthOptions.AuthenticationSchemeName;
-            })
-            .AddSiteminderAuth(options => { });
-        services.AddAuthorization(options =>
-        {
-            options.AddPolicy("Business-User", policy => policy.RequireClaim(User.UserTypeClaim, "Business"));
-        });
-        return services;
-    }
-
     public static IServiceCollection AddHandlers(this IServiceCollection services)
     {
         services.AddTransient<ContractHandlers>();
