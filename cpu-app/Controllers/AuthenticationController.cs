@@ -43,10 +43,10 @@ public class AuthenticationController : Controller
         }
 
         // valid secret, create secure token
-        var secretBytes = Encoding.ASCII.GetBytes(configuredSecret);
+        var secretBytes = Encoding.UTF8.GetBytes(configuredSecret);
         var key = new SymmetricSecurityKey(secretBytes);
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var jwtSecurityToken = new JwtSecurityToken(validIssuer, validIssuer, expires: DateTime.UtcNow.AddDays(1), signingCredentials: creds);
+        var jwtSecurityToken = new JwtSecurityToken(validIssuer, validIssuer, expires: DateTime.UtcNow.AddYears(5), signingCredentials: creds);
         return new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
     }
 }
