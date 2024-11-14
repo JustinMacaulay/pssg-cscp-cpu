@@ -1,6 +1,14 @@
 <app-header></app-header>
 <app-notification-banner></app-notification-banner>
 <main class='container-fluid'>
+  <div
+    *ngIf="!error && isOutage()"
+    class="text-center warning"
+  >
+    <h1 class="warning">Site Outage</h1>
+    <h2 class="warning"><b>{{ configuration.outageMessage }}</b>></h2>
+    <h2 class="warning"><b>{{ generateOutageDateMessage() }}</b>></h2>
+  </div>
   <router-outlet></router-outlet>
 </main>
 <app-footer></app-footer>
