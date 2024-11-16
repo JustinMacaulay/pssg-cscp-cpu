@@ -4,27 +4,28 @@ import { iDynamicsPostScheduleF } from '../models/dynamics-post';
 import { Observable, throwError, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProgramSurplusService {
-  // this should query the test api
-  apiUrl = 'api/DynamicsProgramSurplus';
+  baseUrl = environment.apiRootUrl;
+  apiPath = this.baseUrl.concat('api/DynamicsProgramSurplus');
 
   constructor(
     private http: HttpClient,
   ) { }
 
   getProgramSurplus(organizationId: string, userId: string, scheduleFId: string): Observable<iDynamicsProgramSurplusResponse> {
-    return this.http.get<iDynamicsProgramSurplusResponse>(`${this.apiUrl}/${organizationId}/${userId}/${scheduleFId}`, { headers: this.headers }).pipe(
+    return this.http.get<iDynamicsProgramSurplusResponse>(`${this.apiPath}/${organizationId}/${userId}/${scheduleFId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
   setProgramSurplus(budgetProposal: iDynamicsPostScheduleF): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, budgetProposal, { headers: this.headers }).pipe(
+    return this.http.post<any>(`${this.apiPath}`, budgetProposal, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );

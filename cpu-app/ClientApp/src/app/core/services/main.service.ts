@@ -3,21 +3,21 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { iDynamicsBlob } from '../models/dynamics-blob';
 import { retry, catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MainService {
-
-  // this should query the test api
-  apiUrl = 'api/DynamicsBlob';
+  baseUrl = environment.apiRootUrl;
+  apiPath = this.baseUrl.concat('api/DynamicsBlob');
 
   constructor(
     private http: HttpClient,
   ) { }
 
   getBlob(userId: string, organizationId: string): Observable<iDynamicsBlob> {
-    return this.http.get<iDynamicsBlob>(`${this.apiUrl}/${organizationId}/${userId}`, { headers: this.headers }).pipe(
+    return this.http.get<iDynamicsBlob>(`${this.apiPath}/${organizationId}/${userId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );

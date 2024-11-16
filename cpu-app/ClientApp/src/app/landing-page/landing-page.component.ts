@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserDataService } from '../core/services/user-data.service';
 import { StateService } from '../core/services/state.service';
 import { UserSettings } from '../core/models/user-settings.class';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-landing-page',
@@ -14,6 +15,9 @@ export class LandingPageComponent implements OnInit {
   loggedIn: boolean = false;
   isNewUserRegistration: boolean = false;
   contactExistsButNotApproved: boolean = false;
+
+  apiUrl = environment.apiRootUrl;
+
   constructor(private router: Router,
     private userData: UserDataService,
     private stateService: StateService) {
@@ -54,7 +58,7 @@ export class LandingPageComponent implements OnInit {
       this.stateService.login();
     }
     else {
-      this.window.location.href = 'login';
+      this.window.location.href = this.apiUrl.concat('login');
     }
   }
   logout() {

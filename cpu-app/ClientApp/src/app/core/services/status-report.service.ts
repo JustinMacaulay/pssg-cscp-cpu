@@ -4,39 +4,42 @@ import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { iDynamicsMonthlyStatisticsQuestions } from '../models/dynamics-blob';
 import { iDynamicsPostStatusReport } from '../models/dynamics-post';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatusReportService {
-  //this service does a "collect questions" and a "set and forget" It is unlike other parts of the application in that the user is expected not to stop and resume the process. Type them all in at once and send it.
+  // This service does a "collect questions" and a "set and forget".
+  // It is unlike other parts of the application in that the user is expected not to stop and resume the process. Type them all in at once and send it.
 
-  apiUrl = 'api/DynamicsStatusReport';
+  baseUrl = environment.apiRootUrl;
+  apiPath = this.baseUrl.concat('api/DynamicsStatusReport');
 
   constructor(
     private http: HttpClient,
   ) { }
 
   getStatusReportQuestions(organizationId: string, userId: string, taskId: string): Observable<iDynamicsMonthlyStatisticsQuestions> {
-    return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiUrl}/${organizationId}/${userId}/${taskId}`, { headers: this.headers }).pipe(
+    return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiPath}/${organizationId}/${userId}/${taskId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
   setStatusReportAnswers(taskId: string, answers: iDynamicsPostStatusReport): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/${taskId}`, answers, { headers: this.headers }).pipe(
+    return this.http.post<any>(`${this.apiPath}/${taskId}`, answers, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
   getStatusReportAnswers(organizationId: string, userId: string, dataCollectionId: string): Observable<iDynamicsMonthlyStatisticsQuestions> {
-    return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiUrl}/data_collection/${organizationId}/${userId}/${dataCollectionId}`, { headers: this.headers }).pipe(
+    return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiPath}/data_collection/${organizationId}/${userId}/${dataCollectionId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
   getMonthlyStats(organizationId: string, userId: string, contractId: string) {
-    return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiUrl}/monthly_stats/${organizationId}/${userId}/${contractId}`, { headers: this.headers }).pipe(
+    return this.http.get<iDynamicsMonthlyStatisticsQuestions>(`${this.apiPath}/monthly_stats/${organizationId}/${userId}/${contractId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );

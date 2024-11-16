@@ -2,31 +2,33 @@ import { retry, catchError } from 'rxjs/operators';
 import { Observable, throwError, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserDataService {
-  apiUrl = 'api/User';
+  baseUrl = environment.apiRootUrl;
+  apiPath = this.baseUrl.concat('api/User');
 
   constructor(
     private http: HttpClient,
   ) { }
 
   checkIfLoggedIn() {
-    return this.http.get(`${this.apiUrl}/isLoggedIn`, { headers: this.headers }).pipe(
+    return this.http.get(`${this.apiPath}/isLoggedIn`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
   getCurrentUser() {
-    return this.http.get(`${this.apiUrl}/current`, { headers: this.headers }).pipe(
+    return this.http.get(`${this.apiPath}/current`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
   getLogoutUrl() {
-    return this.http.get(`${this.apiUrl}/GetLogoutUrl`, { headers: this.headers }).pipe(
+    return this.http.get(`${this.apiPath}/GetLogoutUrl`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );

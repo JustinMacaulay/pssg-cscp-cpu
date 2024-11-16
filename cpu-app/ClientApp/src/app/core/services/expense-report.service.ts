@@ -4,26 +4,27 @@ import { Observable, throwError, of } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { iDynamicsScheduleGResponse } from '../models/dynamics-blob';
 import { iDynamicsPostScheduleG } from '../models/dynamics-post';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExpenseReportService {
-  // this should query the test api
-  apiUrl = 'api/DynamicsExpenseReport';
+  baseUrl = environment.apiRootUrl;
+  apiPath = this.baseUrl.concat('api/DynamicsExpenseReport');
 
   constructor(
     private http: HttpClient,
   ) { }
 
   getExpenseReport(organizationId: string, userId: string, expenseReportId: string): Observable<iDynamicsScheduleGResponse> {
-    return this.http.get<iDynamicsScheduleGResponse>(`${this.apiUrl}/${organizationId}/${userId}/${expenseReportId}`, { headers: this.headers }).pipe(
+    return this.http.get<iDynamicsScheduleGResponse>(`${this.apiPath}/${organizationId}/${userId}/${expenseReportId}`, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
   setExpenseReport(scheduleG: iDynamicsPostScheduleG): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, scheduleG, { headers: this.headers }).pipe(
+    return this.http.post<any>(`${this.apiPath}`, scheduleG, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)
     );

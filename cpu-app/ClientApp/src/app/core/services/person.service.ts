@@ -3,13 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { iDynamicsPostUsers } from '../models/dynamics-post';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PersonService {
-  // this should query the test api
-  apiUrl = 'api/DynamicsOrg';
+  baseUrl = environment.apiRootUrl;
+  apiPath = this.baseUrl.concat('api/DynamicsOrg');
 
   constructor(
     private http: HttpClient
@@ -17,7 +18,7 @@ export class PersonService {
 
   setPersons(users: iDynamicsPostUsers): Observable<any> {
     // console.log(users); 
-    let full_endpoint = `${this.apiUrl}/SetStaff`;
+    let full_endpoint = `${this.apiPath}/SetStaff`;
     return this.http.post<any>(full_endpoint, users, { headers: this.headers }).pipe(
       retry(3),
       catchError(this.handleError)

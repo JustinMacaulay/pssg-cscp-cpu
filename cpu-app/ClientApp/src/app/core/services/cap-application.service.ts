@@ -3,27 +3,28 @@ import { iDynamicsScheduleFCAPResponse } from '../models/dynamics-blob';
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class CAPApplicationService {
-    // this should query the test api
-    apiUrl = 'api/DynamicsCAPApplication';
+    baseUrl = environment.apiRootUrl;
+    apiPath = this.baseUrl.concat('api/DynamicsCAPApplication');
 
     constructor(
         private http: HttpClient,
     ) { }
 
     getCAPApplication(organizationId: string, userId: string, scheduleFId: string): Observable<iDynamicsScheduleFCAPResponse> {
-        return this.http.get<iDynamicsScheduleFCAPResponse>(`${this.apiUrl}/${organizationId}/${userId}/${scheduleFId}`, { headers: this.headers }).pipe(
+        return this.http.get<iDynamicsScheduleFCAPResponse>(`${this.apiPath}/${organizationId}/${userId}/${scheduleFId}`, { headers: this.headers }).pipe(
             retry(3),
             catchError(this.handleError)
         );
     }
     setCAPApplication(data): Observable<any> {
-        return this.http.post<any>(`${this.apiUrl}`, data, { headers: this.headers }).pipe(
+        return this.http.post<any>(`${this.apiPath}`, data, { headers: this.headers }).pipe(
             retry(3),
             catchError(this.handleError)
         );

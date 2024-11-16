@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state.service';
 import { nameAssemble } from '../../core/constants/name-assemble'
 import { UserDataService } from '../../core/services/user-data.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +18,7 @@ export class HeaderComponent implements OnInit {
   loading = false;
   window = window;
   isNewUserRegistration: boolean = false;
+  apiPath = environment.apiRootUrl;
   constructor(
     private router: Router,
     private stateService: StateService,
