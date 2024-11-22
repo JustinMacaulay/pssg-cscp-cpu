@@ -1,11 +1,15 @@
-name: cd-cpu-app
+name: cd-cpu-api
 
 on:
   workflow_dispatch:
   push:
-    paths:
-      - 'cpu-app/**'
-      - '.github/workflows/cd-cpu.yml'
+    paths-ignore:
+      - '.github/workflows/cd-restitution-ui.yml'
+      - 'COMPLIANCE.yaml'
+      - 'CPU.postman_collection.json'
+      - 'dependabot.yml'
+      - 'LICENSE'
+      - 'README.md'
 
 env:
   APP_NAME: cpu
@@ -44,41 +48,6 @@ jobs:
           cache-from: |
             ${{ env.IMAGE_REGISTRY }}/${{ env.APP_NAME }}-${{ env.IMAGE_NAME }}
           file: ${{ env.CPU_API_DOCKERFILE_PATH }}
-          push: true
-          tags: |
-            ${{ env.IMAGE_REGISTRY }}/${{ env.APP_NAME }}-${{ env.IMAGE_NAME }}:dev
-
-  build-cpu-ui:
-    runs-on: ubuntu-latest
-    if: github.repository_owner == 'bcgov'
-    env:
-      IMAGE_NAME: ui
-      CPU_UI_DOCKERFILE_PATH: ./cpu-app/ClientApp/Dockerfile
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx tooling
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log into OpenShift Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.IMAGE_REGISTRY }}
-          username: ${{ secrets.OCP4_USERNAME }}
-          password: ${{ secrets.OCP4_PASSWORD }}
-
-      - name: Pull image
-        run: docker pull $IMAGE_ID || true
-
-      - name: Build and push cpu-app
-        uses: docker/build-push-action@v6
-        with:
-          build-args: |
-            BUILD_ID="${{ env.BUILD_ID }}"
-          cache-from: |
-            ${{ env.IMAGE_REGISTRY }}/${{ env.APP_NAME }}-${{ env.IMAGE_NAME }}
-          file: ${{ env.CPU_UI_DOCKERFILE_PATH }}
           push: true
           tags: |
             ${{ env.IMAGE_REGISTRY }}/${{ env.APP_NAME }}-${{ env.IMAGE_NAME }}:dev
