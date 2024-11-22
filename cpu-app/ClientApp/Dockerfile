@@ -9,7 +9,7 @@ RUN npm install
 RUN npm run build -- --base-href /coastcontracts --prod
 
 # Create runtime image layer, copy build image contents into this image
-FROM caddy:latest AS final
+FROM caddy:alpine AS final
 COPY ./cpu-app/ClientApp/Caddyfile /etc/caddy/Caddyfile
 COPY --from=build /cpu-app/ClientApp/dist/ /site
 ENV BASE_URL=
