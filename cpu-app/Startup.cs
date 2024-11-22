@@ -220,7 +220,10 @@ namespace Gov.Cscp.Victims.Public
             };
 
             app.UseStaticFiles(staticFileOptions);
-            app.UseSpaStaticFiles(staticFileOptions);
+            if (env.IsDevelopment()) 
+            {            
+              app.UseSpaStaticFiles(staticFileOptions);
+            }
 
             app.UseNoCacheHttpHeaders();
             // IMPORTANT: This session call MUST go before UseMvc()
