@@ -113,11 +113,15 @@ namespace Gov.Cscp.Victims.Public
                 services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(Configuration["KEY_RING_DIRECTORY"]));
             }
 
-            // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
+            if (CurrentEnvironment.IsDevelopment())
             {
-                configuration.RootPath = "ClientApp/dist";
-            });
+                
+              // In production, the Angular files will be served from this directory
+              services.AddSpaStaticFiles(configuration =>
+              {
+                  configuration.RootPath = "ClientApp/dist";
+              });
+            }
 
             // add dynamics database adapter
             services.AddDatabase(Configuration);
@@ -282,18 +286,18 @@ namespace Gov.Cscp.Victims.Public
                     .CreateLogger();
             }
 
-            app.UseSpa(spa =>
+            if (CurrentEnvironment.IsDevelopment())
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core, see https://go.microsoft.com/fwlink/?linkid=864501
-                spa.Options.SourcePath = "ClientApp";
+                
+              app.UseSpa(spa =>
+              {
+                  // To learn more about options for serving an Angular SPA from ASP.NET Core, see https://go.microsoft.com/fwlink/?linkid=864501
+                  spa.Options.SourcePath = "ClientApp";
 
-                // Only run the angular CLI Server in Development mode (not staging or test.)
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                    spa.Options.StartupTimeout = TimeSpan.FromSeconds(200);
-                }
-            });
+                  spa.UseAngularCliServer(npmScript: "start");
+                  spa.Options.StartupTimeout = TimeSpan.FromSeconds(200);                  
+              });
+            }
         }
     }
 }
