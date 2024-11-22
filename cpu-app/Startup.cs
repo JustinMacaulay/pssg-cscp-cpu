@@ -62,6 +62,12 @@ namespace Gov.Cscp.Victims.Public
 
             services.AddMemoryCache();
 
+            services.AddHttpLogging(logging =>
+            {                
+                logging.CombineLogs = true;
+            });
+
+            
             // for security reasons, the following headers are set.
             services.AddMvc(opts =>
             {
@@ -140,8 +146,7 @@ namespace Gov.Cscp.Victims.Public
             services.AddHealthChecks(checks =>
             {
                 checks.AddValueTaskCheck("HTTP Endpoint", () => new ValueTask<IHealthCheckResult>(HealthCheckResult.Healthy("Ok")));
-
-            });
+            });            
 
             services.AddSession(x =>
             {
@@ -236,6 +241,8 @@ namespace Gov.Cscp.Victims.Public
                 Secure = CookieSecurePolicy.Always,
                 MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None
             });
+
+            app.UseHttpLogging(); 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
